@@ -10,6 +10,10 @@ class No_Checks_For_Digitals {
 
 	public function do_no_checks( $gateways ) {
 
+		if( !WC()->cart ) {
+			return $gateways;
+		}
+
 		$do_checks = true;
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 
