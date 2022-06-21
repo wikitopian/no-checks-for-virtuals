@@ -1,25 +1,20 @@
 <?php
 /*
- * Plugin Name: No Checks for Digitals
+ * Plugin Name: No Checks for Virtuals
  */
 
-class No_Checks_For_Digitals {
+class No_Checks_For_Virtuals {
 	public function __construct() {
 		add_filter( 'woocommerce_available_payment_gateways', array( &$this, 'do_no_checks' ), 90, 1 );
 	}
 
 	public function do_no_checks( $gateways ) {
-
-		if( !WC()->cart ) {
-			return $gateways;
-		}
+		if( !WC()->cart ) return $gateways;
 
 		$do_checks = true;
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 
-			//error_log( print_r( $cart_item, true ) );
-
-			if( $cart_item['data']->is_virtual() || $cart_item['data']->is_downloadable() ) {
+			if( $cart_item['data']->is_virtual() ) {
 				$do_checks = false;
 			}
 
@@ -34,6 +29,6 @@ class No_Checks_For_Digitals {
 
 }
 
-$no_checks_for_digitals = new No_Checks_For_Digitals();
+$no_checks_for_virtuals = new No_Checks_For_Virtuals();
 
 /* EOF */
